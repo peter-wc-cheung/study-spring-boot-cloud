@@ -1,0 +1,39 @@
+server:
+  port: 9001
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+spring:
+  application:
+    name: testing-consumer
+
+# allow more endpoints on actuator
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# see HystrixFeignTestClient
+feign:
+  circuit-breaker:
+    enabled: true
+
+# allow to access hystrix dashboard
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: 'localhost'
+  shareSecurityContext: true

@@ -1,0 +1,24 @@
+server.port: 5001
+spring:
+    application:
+        name: cloudGateway
+    cloud:
+      gateway:
+          discovery:
+            locator:
+                enabled: true
+          routes:
+              - id: consumer
+                uri: lb://SERVICE-PROVIDER
+                predicates:
+                  - Path=/**
+                  - Method=GET
+eureka:
+    instance:
+        instance-id: testing-gateway-5001
+        hostname: localhost
+    client:
+        fetch-registry: true
+        register-with-eureka: true
+        service-url:
+            defaultZone: http://localhost:7001/eureka/

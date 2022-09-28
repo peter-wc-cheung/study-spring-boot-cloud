@@ -1,0 +1,2 @@
+server.port: 8001
+eureka.instance.instance-id: service-provider-a

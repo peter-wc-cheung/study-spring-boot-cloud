@@ -1,0 +1,31 @@
+server:
+    port: 9999 # change it on env
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:7001/eureka/, http://localhost:7002/eureka/
+    instance:
+        instance-id: micro-service-cloud-provider-a # change it on env
+        prefer-ip-address: true
+
+spring:
+    application:
+        name: service-provider
+
+management:
+    endpoint:
+        metrics:
+            enabled: true
+        prometheus:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+
+response:
+    message:
+        test: Hello World. This message is from ${eureka.instance.instance-id}
+        x4xx: 403 should be returned. From ${eureka.instance.instance-id}
+        x5xx: 500 should be returned. From ${eureka.instance.instance-id}

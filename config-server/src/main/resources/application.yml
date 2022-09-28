@@ -1,0 +1,22 @@
+server:
+    port: 8888
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://localhost:7001/eureka/, http://localhost:7002/eureka/
+    instance:
+        instance-id: config-server
+        prefer-ip-address: true
+
+spring:
+    application:
+        name: Config-Server
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/Peter-wc-Cheung/test-spring-cloud-config
+                    basedir: target/config

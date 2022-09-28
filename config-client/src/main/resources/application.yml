@@ -1,0 +1,41 @@
+server:
+    port: 8889
+
+spring:
+#    profiles:
+#        active: dev
+    application:
+        name: Config-Client
+    cloud:
+        config:
+            discovery:
+                enabled: true
+                service-id: CONFIG-SERVER
+    config:
+        import: configserver:http://CONFIG-SERVER
+#        import: 'configserver:http://localhost:8888'
+
+spring.cloud.config.fail-fast: true
+spring.cloud.config.retry.max-attempts: 50
+spring.cloud.config.retry.initial-interval: 1500
+spring.cloud.config.retry.multiplier: 1.5
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://localhost:7002/eureka/
+    instance:
+        prefer-ip-address: true
+        instance-id: config-client
+        hostname: localhost
+
+management:
+    endpoint:
+        shutdown:
+            enabled: false
+    endpoints:
+        web:
+            exposure:
+                include: "*"
