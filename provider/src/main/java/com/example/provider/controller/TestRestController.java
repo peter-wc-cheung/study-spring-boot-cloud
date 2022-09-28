@@ -1,10 +1,12 @@
 package com.example.provider.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +25,16 @@ public class TestRestController {
     private String responseMessage5xx;
 
     @GetMapping("test")
-    public ResponseEntity<?> get(HttpServletRequest request) {
+    public ResponseEntity<?> get(HttpServletRequest request, @RequestParam(name = "test", required = false) String test) {
 
         request.getHeaderNames().asIterator().forEachRemaining(e -> {
             log.info("{}: {}", e, request.getHeader(e));
         });
+
+        String responseMessageTest = this.responseMessageTest;
+        if (StringUtils.isNotBlank(test)){
+            responseMessageTest += ", param test is " + test;
+        }
 
         return ResponseEntity.ok(responseMessageTest);
     }
