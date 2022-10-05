@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -37,6 +39,22 @@ public class TestRestController {
         }
 
         return ResponseEntity.ok(responseMessageTest);
+    }
+
+    @GetMapping("session")
+    public ResponseEntity<?> session(HttpServletRequest request, @RequestParam(name = "test", required = false) String test) {
+
+        int count = request.getSession().getAttribute("count") == null ? 0 : (int) request.getSession().getAttribute("count");
+
+        request.getSession().setAttribute("count", ++count);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("---", this.responseMessageTest);
+        request.getSession().getAttributeNames().asIterator().forEachRemaining(e -> {
+            map.put(e, request.getSession().getAttribute(e));
+        });
+
+        return ResponseEntity.ok(map);
     }
 
 
