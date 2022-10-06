@@ -12,11 +12,6 @@ import javax.annotation.PostConstruct;
 @Component
 public class HystrixFeignClientFallbackFactory implements FallbackFactory<HystrixFeignTestClient> {
 
-    @PostConstruct
-    private void init() {
-        log.info("HystrixFeignClientFallbackFactory is now initiation");
-    }
-
     @Override
     public HystrixFeignTestClient create(Throwable cause) {
 

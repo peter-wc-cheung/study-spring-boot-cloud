@@ -20,3 +20,15 @@ spring:
                 git:
                     uri: https://github.com/Peter-wc-Cheung/test-spring-cloud-config
                     basedir: target/config
+                    default-label: main
+                    repos:
+                      development:
+                          pattern:
+                              - '*/development'
+                              - '*/staging'
+                          uri: https://github.com/Peter-wc-Cheung/test-spring-cloud-config-development
+                      staging:
+                          pattern:
+                              - '*/qa'
+                              - '*/production'
+                          uri: https://github.com/Peter-wc-Cheung/test-spring-cloud-config-production

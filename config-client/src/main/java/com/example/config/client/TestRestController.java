@@ -13,9 +13,12 @@ public class TestRestController {
     @Value("${my.prop}")
     private String myProp;
 
+    @Value("${my.test:}")
+    private String test;
+
     @GetMapping("/")
     public String home() {
-        return "Hello World!" + myProp + "," + foo;
+        return "Hello World!" + myProp + "," + foo + "\n" + test;
     }
 
 }
