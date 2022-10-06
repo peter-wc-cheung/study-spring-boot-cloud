@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 @Slf4j
 public class FeignConfiguration {
 
+    // Global method to add request header
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
@@ -21,6 +22,7 @@ public class FeignConfiguration {
         };
     }
 
+    // Global exception caught
     @Bean
     public ErrorDecoder errorDecoder() {
         return (s, response) -> {

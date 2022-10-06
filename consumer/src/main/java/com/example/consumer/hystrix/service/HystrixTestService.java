@@ -14,7 +14,6 @@ public class HystrixTestService {
     @HystrixCommand(
             fallbackMethod = "timeoutHandler", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
-//            @HystrixProperty(name= "execution.isolation.strategy", value="SEMAPHORE"),
     })
     public String getResult() {
         sleep(20000);
@@ -40,7 +39,7 @@ public class HystrixTestService {
 
     @HystrixCommand(commandKey = "testingHystrixCommand", fallbackMethod = "checkMoreThanZeroFallbackMethod", commandProperties = {
             @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),      // enable the circuit breaker
-            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds",value = "1000"),
+            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds",value = "10000"),
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
             @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60"),
@@ -52,12 +51,13 @@ public class HystrixTestService {
         return "The entered number is more than zero! " + input;
     }
 
-    private String checkMoreThanZeroFallbackMethod(int input) {
+    private String checkMoreThanZeroFallbackMethod(int input, Throwable throwable) {
         HystrixCircuitBreaker breaker = HystrixCircuitBreaker.Factory.getInstance(HystrixCommandKey.Factory.asKey("testingHystrixCommand"));
         if (breaker != null) {
             log.info("allowRequest: {}", breaker.allowRequest());
         }
-        return "The number must be more than zero!";
+        log.info("", throwable);
+        return throwable.getMessage();
     }
 
 
