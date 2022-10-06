@@ -15,8 +15,6 @@ Using Spring Cloud Eureka
   - OpenFeign
 - **_gateway \[5001\]_**
   - Eureka Client
-- **_gateway (zuul) \[5002\]_**
-  - Eureka Client
 - **_config-server \[8888\]_**
   - ConfigServer
 - **_config-client \[8889\]_**
