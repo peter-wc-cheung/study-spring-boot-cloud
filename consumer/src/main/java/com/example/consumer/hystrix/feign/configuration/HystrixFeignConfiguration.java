@@ -19,23 +19,4 @@ public class HystrixFeignConfiguration {
         };
     }
 
-//    @Bean
-//    public ErrorDecoder errorDecoder() {
-//        return (s, response) -> {
-//            String requestUrl = response.request().url();
-//            Response.Body responseBody = response.body();
-//            HttpStatus responseStatus = HttpStatus.valueOf(response.status());
-//
-//            log.info(response.request().httpMethod().name());
-//
-//            if (responseStatus.is5xxServerError()) {
-//                return new RestApiServerException(requestUrl, responseBody);
-//            } else if (responseStatus.is4xxClientError()) {
-//                return new RestApiClientException(requestUrl, responseBody);
-//            } else {
-//                return new Exception("Generic exception");
-//            }
-//        };
-//    }
-
 }
