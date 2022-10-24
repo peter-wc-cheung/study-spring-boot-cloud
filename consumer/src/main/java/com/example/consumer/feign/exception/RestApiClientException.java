@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class RestApiClientException extends Exception {
+public class RestApiClientException extends RuntimeException {
 
     private String requestUrl;
     private Response.Body responseBody;

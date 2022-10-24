@@ -1,0 +1,13 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/4xx"
+    },
+    "response": {
+        "status": 404,
+        "body": "",
+        "headers": {
+            "Content-Type": "text/plain"
+        }
+    }
+}

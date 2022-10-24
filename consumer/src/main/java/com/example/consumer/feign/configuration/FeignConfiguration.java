@@ -1,8 +1,9 @@
-package com.example.consumer.feign;
+package com.example.consumer.feign.configuration;
 
 
 import com.example.consumer.feign.exception.RestApiClientException;
 import com.example.consumer.feign.exception.RestApiServerException;
+import feign.Feign;
 import feign.RequestInterceptor;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -12,6 +13,13 @@ import org.springframework.http.HttpStatus;
 
 @Slf4j
 public class FeignConfiguration {
+
+    // Disable Hystrix for a single Feign client
+    // see https://stackoverflow.com/questions/62669138/disable-hystrix-for-a-single-feign-client
+    @Bean
+    public Feign.Builder feignBuilder() {
+        return Feign.builder();
+    }
 
     // Global method to add request header
     @Bean
@@ -25,12 +33,10 @@ public class FeignConfiguration {
     // Global exception caught
     @Bean
     public ErrorDecoder errorDecoder() {
-        return (s, response) -> {
+        return (methodKey, response) -> {
             String requestUrl = response.request().url();
             Response.Body responseBody = response.body();
             HttpStatus responseStatus = HttpStatus.valueOf(response.status());
-
-            log.info(response.request().httpMethod().name());
 
             if (responseStatus.is5xxServerError()) {
                 return new RestApiServerException(requestUrl, responseBody);

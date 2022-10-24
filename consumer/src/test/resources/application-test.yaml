@@ -1,0 +1,14 @@
+# stop all eureka service when testing
+eureka:
+    client:
+        enabled: false
+
+# add host to load-balance server.
+spring:
+  cloud:
+    discovery.client.simple.instances:
+        service-provider:
+            - uri: http://localhost:${wiremock.server.port:8080}
+
+wiremock:
+    reset-mappings-after-each-test: true

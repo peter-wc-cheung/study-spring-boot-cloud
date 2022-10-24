@@ -14,8 +14,6 @@ eureka:
 spring:
   application:
     name: testing-consumer
-
-# allow more endpoints on actuator
 management:
   endpoint:
     metrics:
@@ -37,3 +35,6 @@ hystrix:
   dashboard:
     proxy-stream-allow-list: 'localhost'
   shareSecurityContext: true
+
+test: service-provider
+

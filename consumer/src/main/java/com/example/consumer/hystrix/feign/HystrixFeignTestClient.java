@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
  * To ensure fallbackFactory works correctly, enable the circuit breaker by feign.circuitbreaker.enabled=true
  */
 @FeignClient(
-        name = "SERVICE-PROVIDER",
+        name = "service-provider",
         contextId = "hystrix-feign-test-client",
         configuration = HystrixFeignConfiguration.class,
         fallbackFactory = HystrixFeignClientFallbackFactory.class)
