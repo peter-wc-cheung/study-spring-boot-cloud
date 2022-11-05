@@ -23,16 +23,23 @@ public class NoFeignTestClient {
     private final RestTemplate restTemplate;
     private static final String REST_URL_PROVIDER_PREFIX = "http://service-provider";
 
-    public String getTest(String apiKey) throws RestApiServerException, RestApiClientException {
+    private HttpHeaders getHeaders() {
+        log.debug("Insert headers");
         HttpHeaders headers = new HttpHeaders();
         headers.set("authorization", "ey235ntjengje");
+        return headers;
+    }
+
+    public String getTest(String apiKey) throws RestApiServerException, RestApiClientException {
+        HttpHeaders headers = getHeaders();
         headers.set("x-api-key", apiKey);
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(REST_URL_PROVIDER_PREFIX + "/test", HttpMethod.GET,
-                    requestEntity, String.class);
+            final String url = REST_URL_PROVIDER_PREFIX + "/test";
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+            log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
             throw new RestApiClientException();
@@ -43,14 +50,12 @@ public class NoFeignTestClient {
     }
 
     public String try4xx() throws RestApiServerException, RestApiClientException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("authorization", "ey235ntjengje");
-
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(REST_URL_PROVIDER_PREFIX + "/4xx", HttpMethod.GET,
-                    requestEntity, String.class);
+            final String url = REST_URL_PROVIDER_PREFIX + "/4xx";
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+            log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
             throw new RestApiClientException();
@@ -60,14 +65,12 @@ public class NoFeignTestClient {
     }
 
     public String try5xx() throws RestApiServerException, RestApiClientException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("authorization", "ey235ntjengje");
-
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(REST_URL_PROVIDER_PREFIX + "/5xx", HttpMethod.GET,
-                    requestEntity, String.class);
+            final String url = REST_URL_PROVIDER_PREFIX + "/5xx";
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+            log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
             throw new RestApiClientException();

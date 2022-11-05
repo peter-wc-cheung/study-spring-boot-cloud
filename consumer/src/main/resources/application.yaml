@@ -9,7 +9,7 @@ eureka:
       defaultZone: http://localhost:7001/eureka/
   instance:
     prefer-ip-address: true
-    hostname: localhost
+    instance-id: test-consumer
 
 spring:
   application:
@@ -38,3 +38,7 @@ hystrix:
 
 test: service-provider
 
+logging.level:
+  com.example: DEBUG
+feign.client.config:
+  default.loggerLevel: full
