@@ -1,0 +1,27 @@
+spring:
+    cloud:
+        stream:
+            bindings:
+                consumer-in-0:
+                    contentType: application/*+avro
+                    destination: test.avro.topic
+#                    producer:
+#                        useNativeEncoding: true
+            kafka:
+                binder:
+                    auto-create-topics: true
+                    brokers: localhost:9092
+                bindings:
+                    consumer-in-0:
+                        consumer:
+                            useNativeEncoding: true
+                            configuration:
+                                key:
+                                    deserializer: org.apache.kafka.common.serialization.LongDeserializer
+                                value:
+                                    deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                                schema:
+                                    registry:
+                                        url: http://localhost:8081
+#    main:
+#        allow-bean-definition-overriding: true

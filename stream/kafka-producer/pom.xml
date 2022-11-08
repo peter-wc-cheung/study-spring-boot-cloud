@@ -11,10 +11,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>spring-cloud-demo-stream-kafka-consumer</artifactId>
+    <artifactId>spring-cloud-demo-stream-kafka-producer</artifactId>
 
-    <name>stream-kafka-consumer</name>
-    <description>Spring Cloud demo (data-stream-kafka-consumer)</description>
+    <name>stream-kafka-producer</name>
+    <description>Spring Cloud demo (data-stream-kafka-producer)</description>
 
     <packaging>jar</packaging>
 

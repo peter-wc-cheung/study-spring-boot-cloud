@@ -1,0 +1,17 @@
+spring:
+    cloud:
+        stream:
+            function:
+                definition: producer
+            bindings:
+                producer-out-0:
+                    destination: test.topic
+            kafka:
+                bindings:
+                    producer-out-0:
+                        producer:
+                            configuration:
+                                key:
+                                    serializer: org.apache.kafka.common.serialization.LongSerializer
+#                                value:
+#                                    serializer: org.apache.kafka.common.serialization.StringSerializer

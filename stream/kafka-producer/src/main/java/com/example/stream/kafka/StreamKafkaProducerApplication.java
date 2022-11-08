@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-public class StreamKafkaApplication {
+public class StreamKafkaProducerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(StreamKafkaApplication.class, args);
+        SpringApplication.run(StreamKafkaProducerApplication.class, args);
     }
 
 }

@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="StreamKafkaProducerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" />
+    <module name="spring-cloud-demo-stream-kafka-producer" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.stream.kafka.StreamKafkaProducerApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -11,10 +11,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>spring-cloud-demo-stream-kafka-consumer</artifactId>
+    <artifactId>spring-cloud-demo-stream-kafka-avro-consumer</artifactId>
 
-    <name>stream-kafka-consumer</name>
-    <description>Spring Cloud demo (data-stream-kafka-consumer)</description>
+    <name>stream-kafka-avro-consumer</name>
+    <description>Spring Cloud demo (data-stream-kafka-avro-consumer)</description>
 
     <packaging>jar</packaging>
 
@@ -24,6 +24,14 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <name>Confluent</name>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
 
@@ -47,6 +55,13 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-schema-registry-client -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-schema-registry-client</artifactId>-->
+<!--            <version>1.1.5</version>-->
+<!--        </dependency>-->
+
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
@@ -55,6 +70,30 @@
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>spring-cloud-demo-stream-kafka-vo</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-avro</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>${confluent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>spring-cloud-demo-stream-kafka-avro-util</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
