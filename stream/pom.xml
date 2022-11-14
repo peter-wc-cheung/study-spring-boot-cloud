@@ -28,6 +28,7 @@
         <module>kafka-avro-util</module>
         <module>kafka-consumer</module>
         <module>kafka-producer</module>
+        <module>kafka-avro-vo</module>
         <module>kafka-avro-consumer</module>
         <module>kafka-avro-producer</module>
     </modules>

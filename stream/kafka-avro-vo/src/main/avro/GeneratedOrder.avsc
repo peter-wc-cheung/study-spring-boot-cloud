@@ -1,0 +1,32 @@
+{
+    "name": "GeneratedOrder",
+    "namespace": "com.example.stream.kafka.avro.generated",
+    "type": "record",
+    "fields": [
+        {
+            "name": "orderId",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid"
+            }
+        },
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "store",
+            "type": "string"
+        },
+        {
+            "name": "orderItem",
+            "type": {
+                "type": "array",
+                "items": {
+                    "name": "orderItem",
+                    "type": "GeneratedOrderItem"
+                }
+            }
+        }
+    ]
+}
