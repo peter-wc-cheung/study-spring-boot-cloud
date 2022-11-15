@@ -1,12 +1,15 @@
 spring:
     cloud:
         stream:
+            function:
+                definition: consumer;generatedConsumer
             bindings:
                 consumer-in-0:
                     contentType: application/*+avro
                     destination: test.avro.topic
-#                    producer:
-#                        useNativeEncoding: true
+                generatedConsumer-in-0:
+                    contentType: application/*+avro
+                    destination: test.avro.generated.topic
             kafka:
                 binder:
                     auto-create-topics: true
@@ -16,15 +19,16 @@ spring:
                         consumer:
                             useNativeEncoding: true
                             configuration:
-                                key:
-                                    deserializer: org.apache.kafka.common.serialization.LongDeserializer
-                                value:
-                                    deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-                                schema:
-                                    registry:
-                                        url: http://localhost:8081
-#    main:
-#        allow-bean-definition-overriding: true
+                                key.deserializer: org.apache.kafka.common.serialization.LongDeserializer
+                                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                                schema.registry.url: http://localhost:8081
+                    generatedConsumer-in-0:
+                        consumer:
+                            configuration:
+                                key.deserializer: org.apache.kafka.common.serialization.LongDeserializer
+                                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                                schema.registry.url: http://localhost:8081
+                                specific.avro.reader: true
 
 application:
     elastic:

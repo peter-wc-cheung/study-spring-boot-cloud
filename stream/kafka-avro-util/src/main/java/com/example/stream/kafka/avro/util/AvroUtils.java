@@ -2,6 +2,7 @@ package com.example.stream.kafka.avro.util;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.avro.AvroFactory;
 import com.fasterxml.jackson.dataformat.avro.AvroSchema;
 import com.fasterxml.jackson.dataformat.avro.schema.AvroSchemaGenerator;
@@ -13,6 +14,8 @@ import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.*;
+import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.avro.specific.SpecificRecord;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,6 +67,40 @@ public class AvroUtils {
                     .readValue(bytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static String toJson(GenericRecord genericRecord) throws JsonMappingException {
+        ObjectMapper mapper = new ObjectMapper(new AvroFactory());
+
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            DatumWriter<GenericRecord> writer = new GenericDatumWriter<>(genericRecord.getSchema());
+            BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(outputStream, null);
+            writer.write(genericRecord, encoder);
+            encoder.flush();
+
+            byte[] bytes = outputStream.toByteArray();
+
+            return mapper.readerFor(ObjectNode.class)
+                    .with(new AvroSchema(genericRecord.getSchema()))
+                    .readValue(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static byte[] convertToJson(GenericRecord record) {
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            JsonEncoder jsonEncoder = EncoderFactory.get().jsonEncoder(record.getSchema(), outputStream);
+            DatumWriter<GenericRecord> writer = record instanceof SpecificRecord ?
+                    new SpecificDatumWriter<>(record.getSchema()) :
+                    new GenericDatumWriter<>(record.getSchema());
+            writer.write(record, jsonEncoder);
+            jsonEncoder.flush();
+            return outputStream.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to convert to JSON.", e);
         }
     }
 

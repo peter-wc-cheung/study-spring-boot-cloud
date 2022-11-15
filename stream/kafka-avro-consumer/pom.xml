@@ -98,6 +98,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>spring-cloud-demo-stream-kafka-avro-vo</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>co.elastic.clients</groupId>
             <artifactId>elasticsearch-java</artifactId>
             <version>7.17.7</version>

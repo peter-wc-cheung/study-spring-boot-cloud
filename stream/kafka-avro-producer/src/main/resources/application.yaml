@@ -6,6 +6,7 @@ spring:
 #                    useNativeEncoding: true
             bindings:
                 producer-out-0:
+                    contentType: application/*+avro
                     destination: test.avro.topic
                     producer:
                         useNativeEncoding: true

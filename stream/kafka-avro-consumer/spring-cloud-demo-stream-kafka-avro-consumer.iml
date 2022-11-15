@@ -130,6 +130,7 @@
     <orderEntry type="library" name="Maven: com.eclipsesource.minimal-json:minimal-json:0.9.5" level="project" />
     <orderEntry type="library" name="Maven: io.confluent:common-utils:7.2.1" level="project" />
     <orderEntry type="module" module-name="spring-cloud-demo-stream-kafka-util" />
+    <orderEntry type="module" module-name="spring-cloud-demo-stream-kafka-avro-vo" />
     <orderEntry type="library" name="Maven: co.elastic.clients:elasticsearch-java:7.17.7" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.client:elasticsearch-rest-client:7.17.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
