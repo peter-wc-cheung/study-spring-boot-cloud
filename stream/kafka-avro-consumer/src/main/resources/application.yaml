@@ -25,3 +25,7 @@ spring:
                                         url: http://localhost:8081
 #    main:
 #        allow-bean-definition-overriding: true
+
+application:
+    elastic:
+        enable: true

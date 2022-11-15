@@ -1,8 +1,7 @@
 package com.example.stream.kafka.avro;
 
-import com.example.stream.kafka.avro.util.AvroUtils;
-import com.example.stream.kafka.vo.Order;
-import com.example.stream.kafka.vo.OrderItem;
+import com.example.stream.kafka.avro.generated.GeneratedOrder;
+import com.example.stream.kafka.avro.generated.GeneratedOrderItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -18,31 +17,32 @@ import java.util.UUID;
 @Slf4j
 @Component
 @EnableScheduling
-public class KafkaProduceService {
-
+public class KafkaGeneratedProduceService {
     @Autowired
     private StreamBridge streamBridge;
 
     @Scheduled(cron = "*/2 * * * * *")
     public void sendMessage() throws IOException {
 
-        Order order = Order.builder()
-                .orderId(UUID.randomUUID())
-                .name("Name")
-                .store("Store A")
-                .orderItem(
+        GeneratedOrder order = GeneratedOrder.newBuilder()
+                .setOrderId(UUID.randomUUID())
+                .setName("Generated Order Name")
+                .setStore("Store B")
+                .setOrderItem(
                         Arrays.asList(
-                                OrderItem.builder().name("Item A").amount(1L).build(),
-                                OrderItem.builder().name("Item B").amount(3L).build()
+                                GeneratedOrderItem.newBuilder().setName("Item A").setAmount(1L).build(),
+                                GeneratedOrderItem.newBuilder().setName("Item B").setAmount(3L).build()
                         )
                 )
                 .build();
 
-        streamBridge.send("producer-out-0",
+        streamBridge.send("producer-out-1",
                 MessageBuilder
-                        .withPayload(AvroUtils.toGenericRecord(order))
+                        .withPayload(order)
 //                        .setHeader(KafkaHeaders.MESSAGE_KEY, 999L)
                         .build()
         );
+
     }
+
 }

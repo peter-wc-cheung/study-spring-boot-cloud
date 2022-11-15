@@ -133,6 +133,7 @@
     <orderEntry type="library" name="Maven: com.eclipsesource.minimal-json:minimal-json:0.9.5" level="project" />
     <orderEntry type="library" name="Maven: io.confluent:common-utils:7.2.1" level="project" />
     <orderEntry type="module" module-name="spring-cloud-demo-stream-kafka-util" />
+    <orderEntry type="module" module-name="spring-cloud-demo-stream-kafka-avro-vo" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.24" level="project" />
   </component>
 </module>

@@ -6,19 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-//@EnableSchemaRegistryClient
 public class StreamKafkaAvroProducerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(StreamKafkaAvroProducerApplication.class, args);
     }
-
-
-//    @Bean
-//    public SchemaRegistryClient schemaRegistryClient(@Value("${spring.cloud.stream.schemaRegistryClient.endpoint}") String endpoint){
-//        ConfluentSchemaRegistryClient client = new ConfluentSchemaRegistryClient();
-//        client.setEndpoint(endpoint);
-//        return client;
-//    }
 
 }

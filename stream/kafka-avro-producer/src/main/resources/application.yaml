@@ -1,13 +1,17 @@
 spring:
     cloud:
         stream:
-            ddddefault:
-                producer:
-                    useNativeEncoding: true
+#            default:
+#                producer:
+#                    useNativeEncoding: true
             bindings:
                 producer-out-0:
-                    contentType: application/*+avro
                     destination: test.avro.topic
+                    producer:
+                        useNativeEncoding: true
+                producer-out-1:
+                    contentType: application/*+avro
+                    destination: test.avro.generated.topic
                     producer:
                         useNativeEncoding: true
             kafka:
@@ -17,14 +21,21 @@ spring:
                 bindings:
                     producer-out-0:
                         producer:
-                            useNativeEncoding: true
                             configuration:
                                 key:
                                     serializer: org.apache.kafka.common.serialization.LongSerializer
                                 value:
                                     serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-                                schema:
-                                    registry:
-                                        url: http://localhost:8081
-#    main:
-#        allow-bean-definition-overriding: true
+                                schema.registry.url: http://localhost:8081
+                    producer-out-1:
+                        producer:
+                            configuration:
+                                key:
+                                    serializer: org.apache.kafka.common.serialization.LongSerializer
+                                value:
+                                    serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+                                schema.registry.url: http://localhost:8081
+
+
+    main:
+        allow-bean-definition-overriding: true
