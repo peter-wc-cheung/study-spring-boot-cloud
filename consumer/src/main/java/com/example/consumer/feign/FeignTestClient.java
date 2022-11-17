@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "service-provider",
+@FeignClient(name = "${provider.url}",
         contextId = "test-client",
         configuration = FeignConfiguration.class)
 public interface FeignTestClient {

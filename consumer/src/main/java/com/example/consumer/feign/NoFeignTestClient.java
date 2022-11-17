@@ -4,6 +4,7 @@ import com.example.consumer.feign.exception.RestApiClientException;
 import com.example.consumer.feign.exception.RestApiServerException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,7 +22,9 @@ import org.springframework.web.client.RestTemplate;
 public class NoFeignTestClient {
 
     private final RestTemplate restTemplate;
-    private static final String REST_URL_PROVIDER_PREFIX = "http://service-provider";
+
+    @Value("${provider.url}")
+    private String providerUrl;
 
     private HttpHeaders getHeaders() {
         log.debug("Insert headers");
@@ -37,7 +40,7 @@ public class NoFeignTestClient {
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
         try {
-            final String url = REST_URL_PROVIDER_PREFIX + "/test";
+            final String url = providerUrl + "/test";
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
             log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
@@ -53,7 +56,7 @@ public class NoFeignTestClient {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
 
         try {
-            final String url = REST_URL_PROVIDER_PREFIX + "/4xx";
+            final String url = providerUrl + "/4xx";
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
             log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
@@ -68,7 +71,7 @@ public class NoFeignTestClient {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
 
         try {
-            final String url = REST_URL_PROVIDER_PREFIX + "/5xx";
+            final String url = providerUrl + "/5xx";
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
             log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();

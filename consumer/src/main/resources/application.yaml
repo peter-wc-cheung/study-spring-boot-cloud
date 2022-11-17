@@ -36,7 +36,8 @@ hystrix:
     proxy-stream-allow-list: 'localhost'
   shareSecurityContext: true
 
-test: service-provider
+provider:
+  url: http://service-provider
 
 logging.level:
   com.example: DEBUG
