@@ -5,45 +5,37 @@ import com.example.consumer.feign.exception.RestApiServerException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 /**
- * RestTemplate version of FeignTestClient
+ * WebClient version of FeignTestClient
  */
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class NoFeignTestClient {
-
-    private final RestTemplate restTemplate;
+public class WebClientTestClient {
+    private final WebClient.Builder webClientBuilder;
 
     @Value("${provider.url}")
     private String providerUrl;
 
-    private HttpHeaders getHeaders() {
+    private void setHeaders(HttpHeaders headers) {
         log.debug("Insert headers");
-        HttpHeaders headers = new HttpHeaders();
         headers.set("authorization", "ey235ntjengje");
-        return headers;
     }
 
     public String getTest(String apiKey) throws RestApiServerException, RestApiClientException {
-        HttpHeaders headers = getHeaders();
-        headers.set("x-api-key", apiKey);
-
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-
         try {
-            final String url = providerUrl + "/test";
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
-            log.debug("Request to {}, response body: {}", url, response.getBody());
-            return response.getBody();
+            final String url = "/test";
+            return getWebClient().get().uri(url)
+                    .headers(this::setHeaders)
+                    .header("x-api-key", apiKey)
+                    .retrieve()
+                    .bodyToMono(String.class).block();
         } catch (HttpClientErrorException e) {
             throw new RestApiClientException();
         } catch (Exception e) {
@@ -53,13 +45,14 @@ public class NoFeignTestClient {
     }
 
     public String try4xx() throws RestApiServerException, RestApiClientException {
-        HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
-
         try {
             final String url = providerUrl + "/4xx";
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
-            log.debug("Request to {}, response body: {}", url, response.getBody());
-            return response.getBody();
+            Mono<String> response = getWebClient().get().uri(url)
+                    .headers(this::setHeaders)
+                    .retrieve()
+                    .bodyToMono(String.class);
+            log.debug("Request to {}, response body: {}", url, response.block());
+            return response.block();
         } catch (HttpClientErrorException e) {
             throw new RestApiClientException();
         } catch (Exception e) {
@@ -68,18 +61,25 @@ public class NoFeignTestClient {
     }
 
     public String try5xx() throws RestApiServerException, RestApiClientException {
-        HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
-
         try {
             final String url = providerUrl + "/5xx";
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
-            log.debug("Request to {}, response body: {}", url, response.getBody());
-            return response.getBody();
+            Mono<String> response = getWebClient().get().uri(url)
+                    .headers(this::setHeaders)
+                    .retrieve()
+                    .bodyToMono(String.class);
+            log.debug("Request to {}, response body: {}", url, response.block());
+            return response.block();
         } catch (HttpClientErrorException e) {
             throw new RestApiClientException();
         } catch (Exception e) {
             throw new RestApiServerException();
         }
+    }
+
+    private WebClient getWebClient() {
+        return webClientBuilder
+                .baseUrl(providerUrl)
+                .build();
     }
 
 }

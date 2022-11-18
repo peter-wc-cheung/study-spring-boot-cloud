@@ -18,9 +18,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureWireMock(port = 0, stubs = "classpath:/stubs")
-public class NoFeignTestClientIntgTest {
+public class RestTemplateTestClientIntgTest {
     @Autowired
-    private NoFeignTestClient testClient;
+    private RestTemplateTestClient testClient;
 
     @Test
     void getTest() {
