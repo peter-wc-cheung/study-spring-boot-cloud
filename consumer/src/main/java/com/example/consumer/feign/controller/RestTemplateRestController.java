@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("test/no-feign")
+@RequestMapping("test/rest-client")
 public class RestTemplateRestController {
 
     private final RestTemplateTestClient restTemplateTestClient;
