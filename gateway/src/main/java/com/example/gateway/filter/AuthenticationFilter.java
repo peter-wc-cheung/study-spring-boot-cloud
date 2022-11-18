@@ -27,14 +27,11 @@ public class AuthenticationFilter implements GatewayFilterFactory<Authentication
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
 
-            log.info("Config: {}", config);
-
             if (! request.getHeaders().containsKey("x-api-key")) {
                 return onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
             }
 
             String apiKey = request.getHeaders().getFirst("x-api-key");
-
             if (apiKey != null && apiKey.equals("api-key")) {
                 return chain.filter(exchange);
             }

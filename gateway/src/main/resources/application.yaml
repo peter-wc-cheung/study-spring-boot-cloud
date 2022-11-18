@@ -21,7 +21,7 @@ spring:
                     - Path=/provider-with-auth/**
                     - Method=GET
                 filters:
-                    - RewritePath=/provider, /
+                    - RewritePath=/provider-with-auth, /
                     - name: AuthenticationFilter
                       args:
                           tempArg1: Test Input Argument 1

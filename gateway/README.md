@@ -27,6 +27,5 @@
 ```
 #### 3) Access provider via gateway (Reject as No API-KEY)
 ```
-  curl --location --request GET 'http://localhost:5001/provider-with-auth/test' \
-  --header 'x-api-key: invalid-api-key'
+  curl --location --request GET 'http://localhost:5001/provider-with-auth/test'
 ```
