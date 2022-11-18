@@ -11,10 +11,20 @@ spring:
               - id: provider
                 uri: lb://SERVICE-PROVIDER
                 predicates:
-                  - Path=/provider/**
-                  - Method=GET
+                    - Path=/provider/**
+                    - Method=GET
                 filters:
-                  - RewritePath=/provider, /
+                    - RewritePath=/provider, /
+              - id: provider-with-auth
+                uri: lb://SERVICE-PROVIDER
+                predicates:
+                    - Path=/provider-with-auth/**
+                    - Method=GET
+                filters:
+                    - RewritePath=/provider, /
+                    - name: AuthenticationFilter
+                      args:
+                          tempArg1: Test Input Argument 1
 eureka:
     instance:
         instance-id: testing-gateway-5001
