@@ -37,12 +37,12 @@ public class HystrixRestController {
         return ResponseEntity.ok(testClient.getTest("a-p-i-k-e-y"));
     }
 
-    @GetMapping("feign/4xx")
+    @GetMapping("feign/try4xx")
     public ResponseEntity<?> get4xx() {
         return ResponseEntity.ok(testClient.try4xx());
     }
 
-    @GetMapping("feign/5xx")
+    @GetMapping("feign/try5xx")
     public ResponseEntity<?> get5xx() {
         return ResponseEntity.ok(testClient.try5xx());
     }
