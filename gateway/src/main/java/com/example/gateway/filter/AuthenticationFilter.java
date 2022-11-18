@@ -51,6 +51,8 @@ public class AuthenticationFilter implements GatewayFilterFactory<Authentication
         response.getHeaders().setContentLength(err.length());
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
 
+        response.setStatusCode(httpStatus);
+
         DataBuffer dataBuffer = response.bufferFactory().wrap(err.getBytes(StandardCharsets.UTF_8));
         response.getHeaders().setContentLength(err.length());
         response.writeWith(Mono.just(dataBuffer)).subscribe();
