@@ -8,8 +8,13 @@ import feign.RequestInterceptor;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class FeignConfiguration {
@@ -38,10 +43,17 @@ public class FeignConfiguration {
             Response.Body responseBody = response.body();
             HttpStatus responseStatus = HttpStatus.valueOf(response.status());
 
+            String body = "";
+            try {
+                InputStream is = responseBody.asInputStream();
+                body = IOUtils.toString(is, StandardCharsets.UTF_8);
+            } catch (IOException ignored) {
+            }
+
             if (responseStatus.is5xxServerError()) {
                 return new RestApiServerException(requestUrl, responseBody);
             } else if (responseStatus.is4xxClientError()) {
-                return new RestApiClientException(requestUrl, responseBody);
+                return new RestApiClientException("Client 4xx exception", requestUrl, responseStatus, body);
             } else {
                 return new Exception("Generic exception");
             }

@@ -1,37 +1,35 @@
 package com.example.consumer.feign.exception;
 
-import feign.Response;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import org.springframework.http.HttpStatus;
 
 @Slf4j
 public class RestApiClientException extends RuntimeException {
 
+    @Getter
     private String requestUrl;
-    private Response.Body responseBody;
+    @Getter
+    private HttpStatus status;
+    @Getter
+    private String response;
 
-    public RestApiClientException() {
-        super("Client exception caught!");
+    public RestApiClientException(String message) {
+        super(message);
     }
 
-    public RestApiClientException(String requestUrl, Response.Body responseBody) {
-        super("Client exception caught!");
-        log.info("Request URL: {}", requestUrl);
-        log.info("Response: {}", responseBody);
-
-        try {
-            InputStream is = responseBody.asInputStream();
-            log.info(IOUtils.toString(is, StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+    public RestApiClientException(Throwable e, String requestUrl, HttpStatus status, String response) {
+        super(e);
         this.requestUrl = requestUrl;
-        this.responseBody = responseBody;
+        this.status = status;
+        this.response = response;
+    }
+
+    public RestApiClientException(String message, String requestUrl, HttpStatus status, String response) {
+        super(message);
+        this.requestUrl = requestUrl;
+        this.status = status;
+        this.response = response;
     }
 
 }

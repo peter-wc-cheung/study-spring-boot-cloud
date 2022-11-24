@@ -1,0 +1,18 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/test",
+        "headers": {
+            "x-api-key": {
+                "equalTo": ""
+            }
+        }
+    },
+    "response": {
+        "status": 401,
+        "body": "Api Key is empty (invalid)",
+        "headers": {
+            "Content-Type": "text/plain"
+        }
+    }
+}

@@ -39,13 +39,13 @@ public class RestTemplateTestClient {
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
+        final String url = providerUrl + "/test";
         try {
-            final String url = providerUrl + "/test";
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
             log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
-            throw new RestApiClientException();
+            throw new RestApiClientException(e, url, e.getStatusCode(), e.getResponseBodyAsString());
         } catch (Exception e) {
             log.error("", e);
             throw new RestApiServerException();
@@ -55,13 +55,13 @@ public class RestTemplateTestClient {
     public String try4xx() throws RestApiServerException, RestApiClientException {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
 
+        final String url = providerUrl + "/4xx";
         try {
-            final String url = providerUrl + "/4xx";
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
             log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
-            throw new RestApiClientException();
+            throw new RestApiClientException("Client 4xx exception", url, e.getStatusCode(), e.getResponseBodyAsString());
         } catch (Exception e) {
             throw new RestApiServerException();
         }
@@ -70,13 +70,13 @@ public class RestTemplateTestClient {
     public String try5xx() throws RestApiServerException, RestApiClientException {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHeaders());
 
+        final String url = providerUrl + "/5xx";
         try {
-            final String url = providerUrl + "/5xx";
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
             log.debug("Request to {}, response body: {}", url, response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
-            throw new RestApiClientException();
+            throw new RestApiClientException("Client 5xx exception", url, e.getStatusCode(), e.getResponseBodyAsString());
         } catch (Exception e) {
             throw new RestApiServerException();
         }

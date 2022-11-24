@@ -26,15 +26,20 @@ public class FeignTestClientIntgTest {
     void getTest() {
         String response = this.testClient.getTest("test-api-key");
 
-        assertThat(response).isEqualTo("Hello world!");
+        assertThat(response).isEqualTo("Hello World!!");
     }
 
     @Test
     void getTestWith4xx() {
-        Assertions.assertThrows(RestApiClientException.class, () -> {
-            stubFor(get("/test").willReturn(status(404)));
+        RestApiClientException e = Assertions.assertThrows(RestApiClientException.class, () -> {
+            stubFor(get("/test").willReturn(status(403).withBody("403")));
             this.testClient.getTest("test-api-key");
         });
+        log.info("Exception: ", e);
+        log.info(e.getMessage());
+        log.info(e.getRequestUrl());
+        log.info(e.getStatus().toString());
+        log.info(e.getResponse());
     }
 
     @Test

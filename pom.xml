@@ -57,6 +57,7 @@
         <module>config-server</module>
         <module>config-client</module>
         <module>stream</module>
+        <module>function</module>
     </modules>
 
 </project>

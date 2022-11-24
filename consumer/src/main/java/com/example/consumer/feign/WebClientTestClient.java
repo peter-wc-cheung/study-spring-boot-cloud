@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -29,15 +30,15 @@ public class WebClientTestClient {
     }
 
     public String getTest(String apiKey) throws RestApiServerException, RestApiClientException {
+        final String url = "/test";
         try {
-            final String url = "/test";
             return getWebClient().get().uri(url)
                     .headers(this::setHeaders)
                     .header("x-api-key", apiKey)
                     .retrieve()
                     .bodyToMono(String.class).block();
         } catch (HttpClientErrorException e) {
-            throw new RestApiClientException();
+            throw new RestApiClientException("Client 4xx exception", url, e.getStatusCode(), e.getResponseBodyAsString());
         } catch (Exception e) {
             log.error("", e);
             throw new RestApiServerException();
@@ -45,8 +46,8 @@ public class WebClientTestClient {
     }
 
     public String try4xx() throws RestApiServerException, RestApiClientException {
+        final String url = providerUrl + "/4xx";
         try {
-            final String url = providerUrl + "/4xx";
             Mono<String> response = getWebClient().get().uri(url)
                     .headers(this::setHeaders)
                     .retrieve()
@@ -54,15 +55,15 @@ public class WebClientTestClient {
             log.debug("Request to {}, response body: {}", url, response.block());
             return response.block();
         } catch (HttpClientErrorException e) {
-            throw new RestApiClientException();
+            throw new RestApiClientException("Client 4xx exception", url, e.getStatusCode(), e.getResponseBodyAsString());
         } catch (Exception e) {
             throw new RestApiServerException();
         }
     }
 
     public String try5xx() throws RestApiServerException, RestApiClientException {
+        final String url = providerUrl + "/5xx";
         try {
-            final String url = providerUrl + "/5xx";
             Mono<String> response = getWebClient().get().uri(url)
                     .headers(this::setHeaders)
                     .retrieve()
@@ -70,7 +71,9 @@ public class WebClientTestClient {
             log.debug("Request to {}, response body: {}", url, response.block());
             return response.block();
         } catch (HttpClientErrorException e) {
-            throw new RestApiClientException();
+            throw new RestApiClientException("Client 4xx exception", url, e.getStatusCode(), e.getResponseBodyAsString());
+        } catch (HttpServerErrorException e) {
+            throw new RestApiClientException("Client 5xx exception", url, e.getStatusCode(), e.getResponseBodyAsString());
         } catch (Exception e) {
             throw new RestApiServerException();
         }

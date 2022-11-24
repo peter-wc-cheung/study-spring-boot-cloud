@@ -4,8 +4,8 @@
         "url": "/4xx"
     },
     "response": {
-        "status": 404,
-        "body": "",
+        "status": 403,
+        "body": "123",
         "headers": {
             "Content-Type": "text/plain"
         }

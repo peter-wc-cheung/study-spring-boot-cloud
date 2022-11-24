@@ -25,7 +25,7 @@ public class HystrixFeignTestClientTest {
     void getTest() {
         String response = this.testClient.getTest("abc123");
 
-        assertThat(response).isEqualTo("Hello world!");
+        assertThat(response).isEqualTo("This is a return from fallback factory");
     }
 
     @Test

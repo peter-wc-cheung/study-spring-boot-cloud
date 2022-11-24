@@ -23,16 +23,31 @@ public class RestTemplateTestClientIntgTest {
     private RestTemplateTestClient testClient;
 
     @Test
-    void getTest() {
+    void getTest_emptyApiKey() {
+        RestApiClientException exception = Assertions.assertThrows(RestApiClientException.class, () -> {
+            this.testClient.getTest(null);
+        });
+        log.info(exception.getResponse());
+    }
+
+    @Test
+    void getTest_invalidApiKey() {
+        Assertions.assertThrows(RestApiClientException.class, () -> {
+            this.testClient.getTest("invalid-api-key");
+        });
+    }
+
+    @Test
+    void getTest_validApiKey() {
         String response = this.testClient.getTest("test-api-key");
 
-        assertThat(response).isEqualTo("Hello world!");
+        assertThat(response).isEqualTo("Hello World!!");
     }
 
     @Test
     void getTestWith4xx() {
         Assertions.assertThrows(RestApiClientException.class, () -> {
-            stubFor(get("/test").willReturn(status(404)));
+            stubFor(get("/test").willReturn(status(403)));
             this.testClient.getTest("test-api-key");
         });
     }
