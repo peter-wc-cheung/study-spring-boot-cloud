@@ -19,6 +19,6 @@ public class KafkaProduceService {
     public void sendMessage(){
         streamBridge.send("producer-out-0", org.springframework.integration.support.MessageBuilder
                 .withPayload("123")
-                .setHeader(KafkaHeaders.MESSAGE_KEY, 999L).build());
+                .setHeader(KafkaHeaders.KEY, 999L).build());
     }
 }
