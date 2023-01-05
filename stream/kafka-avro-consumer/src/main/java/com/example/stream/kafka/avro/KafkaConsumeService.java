@@ -38,8 +38,10 @@ public class KafkaConsumeService {
 
                 log.info("{}", order);
             } catch (JsonMappingException e) {
+                log.error("Error!", e);
                 throw new RuntimeException(e);
             } catch (IOException e) {
+                log.error("Error!", e);
                 throw new RuntimeException(e);
             }
         };
