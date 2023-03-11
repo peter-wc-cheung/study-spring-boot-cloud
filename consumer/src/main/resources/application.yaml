@@ -27,7 +27,7 @@ management:
 
 # see HystrixFeignTestClient
 feign:
-  circuit-breaker:
+  circuitbreaker:
     enabled: true
 
 # allow to access hystrix dashboard

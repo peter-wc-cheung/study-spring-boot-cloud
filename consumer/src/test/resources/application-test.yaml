@@ -10,8 +10,7 @@ spring:
             service-provider:
                 -   uri: http://localhost:${wiremock.server.port:8080}
         openfeign:
-            circuitbreaker:
+            circuit-breaker:
                 enabled: true
-
 wiremock:
     reset-mappings-after-each-test: true
