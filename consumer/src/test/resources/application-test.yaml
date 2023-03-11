@@ -5,10 +5,13 @@ eureka:
 
 # add host to load-balance server.
 spring:
-  cloud:
-    discovery.client.simple.instances:
-        service-provider:
-            - uri: http://localhost:${wiremock.server.port:8080}
+    cloud:
+        discovery.client.simple.instances:
+            service-provider:
+                -   uri: http://localhost:${wiremock.server.port:8080}
+        openfeign:
+            circuitbreaker:
+                enabled: true
 
 wiremock:
     reset-mappings-after-each-test: true

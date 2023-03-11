@@ -1,7 +1,7 @@
 package com.example.consumer.hystrix;
 
 import com.example.consumer.hystrix.feign.HystrixFeignTestClient;
-import com.netflix.hystrix.exception.HystrixRuntimeException;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ public class HystrixFeignTestClientTest {
 
     @Test
     void try4xx() {
-        Assertions.assertThrows(HystrixRuntimeException.class, () -> {
+        Assertions.assertThrows(FeignException.Forbidden.class, () -> {
             this.testClient.try4xx();
         });
     }

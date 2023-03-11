@@ -22,6 +22,7 @@ public class HystrixFeignClientFallbackFactory implements FallbackFactory<Hystri
             // You can also have some hardcoded responses.
             @Override
             public String getTest(String apiKey) {
+                log.info("Hello World");
                 return "This is a return from fallback factory";
             }
 
@@ -29,11 +30,13 @@ public class HystrixFeignClientFallbackFactory implements FallbackFactory<Hystri
             public String try4xx() {
                 // Caught Exception by using HystrixRuntimeException.
                 // HystrixRuntimeException.getFallbackException() to retrieve Exception details.
+                log.info("Hello World");
                 throw new HystrixFeignException();
             }
 
             @Override
             public String try5xx() {
+                log.info("Hello World");
                 return "This is a return from fallback factory - 5xx";
             }
         };

@@ -32,4 +32,4 @@ spring:
 
 application:
     elastic:
-        enable: false
+        enable: true
